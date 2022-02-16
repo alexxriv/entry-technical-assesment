@@ -1,5 +1,9 @@
 package com.ks;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
 /**
  * Good luck :)
  */
@@ -19,8 +23,10 @@ public class ApplicationSample
      */
     public static int yearsToCenturies(int years)
     {
-        //Here goes the magic
-        return 0;
+        double yearsDouble = years;
+        yearsDouble/=100.0;
+        int answer = (int)Math.ceil(yearsDouble);
+        return answer;
     }
 
     /**
@@ -41,8 +47,38 @@ public class ApplicationSample
      */
     public static boolean scramble(String str1, String str2)
     {
-        //Here goes the magic
+        HashMap<String, Integer> letterList = new HashMap<String, Integer>();
+
+        for(int i=0; i<str1.length(); i++){
+            String letter = String.valueOf(str1.charAt(i));
+            int value;
+            if(!letterList.containsKey(letter)){
+                value = 0;
+                letterList.put(letter, value);
+            }
+            value = letterList.get(letter);
+            letterList.put(letter, ++value);
+        }
+
+        for(int i=0; i<str2.length(); i++){
+            
+            String letter = String.valueOf(str2.charAt(i));
+
+            if(!letterList.containsKey(letter)){
+                return false;
+            } else {
+                if(letterList.get(letter)==0){
+                    return false;
+                }
+                
+                int value = letterList.get(letter);
+                value--;
+                letterList.put(letter, value);
+            }
+            
+        }
         return true;
+
     }
 
     /**
@@ -63,8 +99,15 @@ public class ApplicationSample
      */
     public static String getMiddle(String word)
     {
-        //Here goes the magic
-        return "MID_CHAR(s)";
+        int length = word.length();
+        String midChars;
+
+        if(length%2==0){
+            midChars = word.substring((length/2)-1, (length/2)+1);
+        }else {
+            midChars = word.substring((length/2), (length/2)+1);
+        }
+        return midChars;
     }
 
     /**
@@ -86,8 +129,21 @@ public class ApplicationSample
      */
     public static int duplicateCount(String text)
     {
-        //Here goes the magic
-        return 0;
+        text = text.toLowerCase();
+        int answer = 0;
+        HashMap<Character, Integer> letterList = new HashMap<Character, Integer>();
+
+        for(int i=0; i<text.length(); i++){
+            if(!letterList.containsKey(text.charAt(i))){
+                letterList.put(text.charAt(i), 0);
+            }
+            int actual = letterList.get(text.charAt(i));
+            letterList.put(text.charAt(i), ++actual);
+            if(actual==2){
+                answer++;
+            }
+        }
+        return answer;
     }
 
     /**
@@ -106,8 +162,18 @@ public class ApplicationSample
      */
     public static int countVocals(String str)
     {
-        //Here goes the magic
-        return 0;
+        str = str.toLowerCase();
+        int count = 0;
+        String vowels = "aeiou";
+
+        for (int i=0; i<str.length(); i++){
+            String letter = String.valueOf(str.charAt(i));
+            if(vowels.contains(letter)){
+                count++;
+            }
+        }
+        
+        return count;
     }
 
     /**
@@ -126,8 +192,19 @@ public class ApplicationSample
      */
     public static int recursiveMultiply(long n)
     {
-        //Here goes the magic
-        return 0;
+        int answer = 1;
+        String numberString = Long.toString(n);
+
+        for(int i=0; i<numberString.length(); i++){
+            int number = Character.getNumericValue(numberString.charAt(i));
+            answer*= number;
+        }
+        
+        if(answer>9){
+            return recursiveMultiply(answer);
+        }else{
+            return answer;
+        }
     }
 
     /**
@@ -146,8 +223,19 @@ public class ApplicationSample
      */
     public static int recursiveSum(int n)
     {
-        //Here goes the magic
-        return 0;
+        int answer = 0;
+        String numberString = Integer.toString(n);
+
+        for(int i=0; i<numberString.length(); i++){
+            int number = Character.getNumericValue(numberString.charAt(i));
+            answer+= number;
+        }
+        
+        if(answer>9){
+            return recursiveSum(answer);
+        }else{
+            return answer;
+        }
     }
 
 
@@ -165,8 +253,18 @@ public class ApplicationSample
      */
     public static String[] coupleArray(String s)
     {
-        //Here goes the magic
-        return new String[]{"PA", "IR", "ED", " V", "AL", "UE"};
+        if(s.length()%2!=0){
+            s = s.concat("_");
+        }
+
+        String[] answer = new String[s.length()/2];
+
+        for(int i=0; i<answer.length; i++){
+            String pair = s.substring(i*2, (i*2)+2);
+            answer[i]= pair;
+        }
+        
+        return answer;
     }
 
     /**
@@ -186,7 +284,32 @@ public class ApplicationSample
      */
     public static String longToIP(long ip)
     {
-        //Here goes the magic
-        return "IP_ADDRESS";
+        String validIP = "";
+        String binario = Long.toBinaryString(ip);
+        binario =  String.format("%32s", binario).replace(' ', '0');
+        
+        for(int i=0; i<binario.length(); i+=8){
+            String subset = binario.substring(i, i+8);
+            int decimal = Integer.parseInt(subset, 2);
+            String group = String.valueOf(decimal).concat(".");
+            validIP= validIP.concat(group);
+        }
+
+        validIP= validIP.substring(0, validIP.length()-1);
+
+        return validIP;
+    }
+
+    public static void main(String[] args){
+        System.out.println(yearsToCenturies(2020));
+        System.out.println(scramble("hdsasdellsdasooawwadwdwawrl", "helloworld"));
+        System.out.println(getMiddle("finish"));
+        System.out.println(duplicateCount("AcCoMmOdatIOn"));
+        System.out.println(countVocals("vowel counting is not an everyday thing"));
+        System.out.println(recursiveMultiply(236));
+        System.out.println(recursiveSum(236));
+        System.out.println(Arrays.toString(coupleArray("Give me some pairs please")));
+        System.out.println(longToIP(2147483467L));
+
     }
 }
