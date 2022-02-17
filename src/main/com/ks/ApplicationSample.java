@@ -47,10 +47,10 @@ public class ApplicationSample
      */
     public static boolean scramble(String str1, String str2)
     {
-        HashMap<String, Integer> letterList = new HashMap<String, Integer>();
+        HashMap<Character, Integer> letterList = new HashMap<Character, Integer>();
 
         for(int i=0; i<str1.length(); i++){
-            String letter = String.valueOf(str1.charAt(i));
+            char letter = str1.charAt(i);
             int value;
             if(!letterList.containsKey(letter)){
                 value = 0;
@@ -62,7 +62,7 @@ public class ApplicationSample
 
         for(int i=0; i<str2.length(); i++){
             
-            String letter = String.valueOf(str2.charAt(i));
+            char letter = str2.charAt(i);
 
             if(!letterList.containsKey(letter)){
                 return false;
